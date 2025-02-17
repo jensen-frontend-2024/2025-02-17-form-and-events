@@ -5,6 +5,7 @@ export function CustomForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordIsValid, setPasswordIsValid] = useState(false);
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
@@ -16,9 +17,14 @@ export function CustomForm() {
     });
   };
 
+  const validatePassword = (value) => {
+    return value.length >= 8;
+  };
+
   useEffect(() => {
-    console.log('CustomForm rendered');
-  });
+    console.log('Validate Password');
+    setPasswordIsValid(validatePassword(password));
+  }, [password]);
 
   return (
     <form className="form" onSubmit={handleOnSubmit}>
@@ -37,6 +43,7 @@ export function CustomForm() {
         label="password"
         onChange={(e) => setPassword(e.target.value)}
         type="password"
+        valid={passwordIsValid}
         value={password}
       />
       <button type="submit">Submit</button>

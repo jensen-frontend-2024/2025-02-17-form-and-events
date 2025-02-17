@@ -1,13 +1,18 @@
 /* eslint-disable react/prop-types */
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 
-export function DynanmicControlledInput({ id, label, onChange, type, value }) {
-  useEffect(() => {
-    console.log('DynanmicControlledInput rendered');
-  });
+export function DynanmicControlledInput({ id, label, onChange, type, valid, value }) {
+  const classNames = ['input-container'];
+
+  if (valid === true) classNames.push('valid');
+  if (valid === false) classNames.push('error');
+  
+  // useEffect(() => {
+  //   console.log('DynanmicControlledInput rendered');
+  // });
 
   return (
-    <div className="input-container">
+    <div className={classNames.join(' ')}>
       <label className="label" htmlFor={id}>
         {label}
       </label>
