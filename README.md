@@ -69,7 +69,7 @@ export function ControlledInput() {
 2. `value={text}` ensures that the input field is always in sync with React state.
 3. `onChange={(e) => setText(e.target.value)}` updates the state whenever the user types.
 
-This is useful for validation, real-time updates, and controlled behavior. But remember, every time you type something inside the input field, React will trigger a rerender because of it, since the value is tied to the state variable
+This is useful for validation, real-time updates, and controlled behavior. But remember, every time you type something inside the input field, React will trigger a rerender because of it, since the value is tied to the state variable. And every time a state variable change _( or props change )_ React WILL force the component to rerender.
 
 [Back to top](#2025-02-17-form-and-events)
 
@@ -110,7 +110,9 @@ export function UncontrolledInput() {
 2. `ref={inputRef}` connects the reference to the input.
 3. `inputRef.current.value` retrieves the value when needed.
 
-This method is useful when integrating with third-party libraries or when managing form data without triggering re-renders.
+This method is useful when integrating with third-party libraries or when managing form data without triggering re-renders. But why doesn't it trigger a rerender? It's beacuse the ref-variable in itself is just a wrapping object to the element OR value it represents. Since the reference is just a pointer to the location in the storage where the element or the value is store, it will always be constant. To access the actual valaue, you must access the `.current`-attribute. It holds the actual value of the ref. 
+
+So whenever you type something in the input field, the DOM that holds the data will keep the value updated but since React is NOT listening to it, it can't because it's concealed inside an object, it will not trigger a rerender. Which is a good thing in many cases.
 
 [Back to top](#2025-02-17-form-and-events)
 
@@ -121,12 +123,6 @@ A controlled component is a form input where React is in full control of the val
 The input’s value is always determined by React state.
 Any change in the input field is handled by an event (usually onChange), which updates the state.
 The input field does not store its own value—it always reflects what’s stored in React’s state.
-
-### Example:
-
-```jsx
-// example
-```
 
 ### Pros:
 
@@ -145,12 +141,6 @@ The input field does not store its own value—it always reflects what’s store
 An uncontrolled component is a form input where React does not directly manage the value using state. Instead, the input manages its own state internally, just like in traditional HTML forms.
 
 This means that the value of an input field is stored inside the DOM itself, rather than being controlled by React’s `useState`. Instead of updating the state on every change, you typically access the value only when needed, using refs.
-
-### Example:
-
-```jsx
-// example
-```
 
 ### Pros:
 
