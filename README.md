@@ -40,7 +40,27 @@ React uses **controlled components** to manage form inputs through state. The `o
 ### Example of a controlled input:
 
 ```jsx
-// exanmple
+import { import { useEffect, useState } from 'react';
+ } from 'react';
+
+export function ControlledInput() {
+  const [value, setValue] = useState('');
+
+  // We can extract the event handler to its own function if the code is more complex.
+  const handleOnChange = (e) => {
+    setValue(e.target.value);
+  };
+
+  useEffect(() => {
+    console.log("ControlledInput rendered")
+  })
+
+  return (
+    <form className="form">
+      <input onChange={(e) => setValue(e.target.value)} type="text" value={value} />
+    </form>
+  );
+}
 ```
 
 ### Explanation:
@@ -49,7 +69,7 @@ React uses **controlled components** to manage form inputs through state. The `o
 2. `value={text}` ensures that the input field is always in sync with React state.
 3. `onChange={(e) => setText(e.target.value)}` updates the state whenever the user types.
 
-This is useful for validation, real-time updates, and controlled behavior.
+This is useful for validation, real-time updates, and controlled behavior. But remember, every time you type something inside the input field, React will trigger a rerender because of it, since the value is tied to the state variable
 
 [Back to top](#2025-02-17-form-and-events)
 
@@ -60,7 +80,28 @@ Another way to access form values is by using **refs** instead of state. This is
 ### Example of an uncontrolled input using `useRef`:
 
 ```jsx
-// example
+import { useEffect, useRef } from 'react';
+
+export function UncontrolledInput() {
+  const inputRef = useRef(null);
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    const value = inputRef.current.value;
+    console.log(value);
+  };
+
+  useEffect(() => {
+    console.log('UncontrolledInput rendered');
+  });
+
+  return (
+    <form className="form" onSubmit={handleOnSubmit}>
+      <input ref={inputRef} type="text" />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
 ```
 
 ### Explanation:
