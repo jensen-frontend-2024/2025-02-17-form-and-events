@@ -40,8 +40,7 @@ React uses **controlled components** to manage form inputs through state. The `o
 ### Example of a controlled input:
 
 ```jsx
-import { import { useEffect, useState } from 'react';
- } from 'react';
+import { useEffect, useState } from 'react';
 
 export function ControlledInput() {
   const [value, setValue] = useState('');
@@ -113,6 +112,10 @@ export function UncontrolledInput() {
 This method is useful when integrating with third-party libraries or when managing form data without triggering re-renders. But why doesn't it trigger a rerender? It's beacuse the ref-variable in itself is just a wrapping object to the element OR value it represents. Since the reference is just a pointer to the location in the storage where the element or the value is store, it will always be constant. To access the actual valaue, you must access the `.current`-attribute. It holds the actual value of the ref. 
 
 So whenever you type something in the input field, the DOM that holds the data will keep the value updated but since React is NOT listening to it, it can't because it's concealed inside an object, it will not trigger a rerender. Which is a good thing in many cases.
+
+In short, `useRef` cand be used in two ways. The first and most common one is to create a refernece ot an actual DOM-element. It's done together with te `ref`-attribute on the element. 
+
+It can also be used to store regular values that we do NOT want React to trigger rerenders on. Use cases are many, for instance, let's say you have a game application and you want to keep track of a score variable, but you don't want React to rerender something whenever the score is updated.
 
 [Back to top](#2025-02-17-form-and-events)
 
